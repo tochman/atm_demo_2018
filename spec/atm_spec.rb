@@ -20,6 +20,13 @@ describe Atm do
         expect(subject.withdraw(50, account)).to eq expected_output
     end 
 
+    it 'rejects withdraw if account do not have enough balance' do 
+        allow(account).to receive(:balance).and_return(0) 
+        #account.balance = 0 
+        expected_output = {status: false, message: 'not enough funds in account', date: Date.today}
+        expect(subject.withdraw(50, account)).to eq expected_output
+    end 
+
     #{ status: true, message: 'success', date: '2016-01-30', amount: 35, bills: [20,10,5]}
     #{ status: false, message: '[reason for failure e. e. wrong pin]', date: '2016-01-30'}
 end
